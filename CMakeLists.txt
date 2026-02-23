@@ -17,3 +17,4 @@ target_include_directories(PSim PRIVATE
     src
     C:/dev/vcpkg/installed/x64-windows/include
 )
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

@@ -4,17 +4,20 @@
 #include "Simulation.hpp"
 #include "Renderer.hpp"
 #include "InputHandler.hpp"
+#include <filesystem>
+#include <iostream>
 
 const int width = 800;
 const int height = 600;
 const int FPS = 60;
 
 int main() {
+	std::cout << std::filesystem::current_path() << std::endl;
 	Simulation simulation(width, height);
 	simulation.addParticle(Particle({ 50, 50 }, 1, -1));
 	Renderer renderer(width, height, "Etai's Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
-	window->setFramerateLimit(FPS);
+	window->setVerticalSyncEnabled(true);
 	while (window->isOpen()) {
 		while (const std::optional event = window->pollEvent()) {
 			if (event->is<sf::Event::Closed>()) {
@@ -24,7 +27,8 @@ int main() {
 		handleEvents(window, simulation);
 		simulation.update();
 		window->clear({255, 255, 255, 255});
-		renderer.draw(simulation.getParticles());
+		renderer.drawParticles(simulation.getParticles());
+		renderer.drawFPS(simulation.getParticles());
 		window->display();
 	}
 }
