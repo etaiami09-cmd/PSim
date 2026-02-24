@@ -7,6 +7,7 @@ Simulation::Simulation(int width, int height)
 {
 	particles = std::vector<Particle>(0);
 	clock = sf::Clock();
+	speed = 1;
 }
 
 void Simulation::addParticle(Particle particle)
@@ -19,7 +20,7 @@ void Simulation::update()
 	accumulateForces(particles);
 	float dt = clock.restart().asSeconds();
 	dt = std::max(dt, 0.016f);
-	integrate(particles, dt);
+	integrate(particles, dt * speed);
 	applyBoundaries(particles, width, height);
 	resetForces(particles);
 }

@@ -10,6 +10,8 @@ private:
 	sf::Clock clock;
 	int width, height;
 public:
+	float speed;
+public:
 	Simulation(int width, int height);
 	void addParticle(Particle particle);
 	void update();

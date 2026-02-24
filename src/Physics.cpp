@@ -20,6 +20,7 @@ void accumulateForces(std::vector<Particle> &particles)
 				particles[i].force += coulombForce(particles[i], particles[j]);
 			}
 		}
+		particles[i].force += lorentzForce(particles[i]);
 	}
 }
 
@@ -81,4 +82,12 @@ sf::Vector2f electricField(std::vector<Particle>& particles, sf::Vector2f positi
 		result += particleElectricField(particle, position);
 	}
 	return result;
+}
+
+sf::Vector2f lorentzForce(const Particle& a) {
+	sf::Vector3f magneticField = sf::Vector3f{ 0, 0, 0.1f };
+	return a.charge * sf::Vector2f{
+		a.velocity.y * magneticField.z,
+		-a.velocity.x * magneticField.z
+	};
 }

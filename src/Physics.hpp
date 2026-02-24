@@ -29,3 +29,7 @@ void applyBoundaries(std::vector<Particle>& particles, int width, int height);
 * Returns unit is N/C
 */
 sf::Vector2f electricField(std::vector<Particle>& particles, sf::Vector2f position);
+/*
+* Calculates the lorentz force on a particle
+*/
+sf::Vector2f lorentzForce(const Particle& a);
