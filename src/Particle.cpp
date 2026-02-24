@@ -9,6 +9,15 @@ Particle::Particle(sf::Vector2f position, float mass, float charge)
 	this->radius = 10;
 }
 
+Particle::Particle() {
+	position = { 0, 0 };
+	mass = 0;
+	charge = 0;
+	velocity = { 0, 0 };
+	force = { 0, 0 };
+	radius = 0;
+}
+
 float Particle::getCharge() const {
 	return this->charge;
 }
@@ -16,6 +25,3 @@ float Particle::getCharge() const {
 float Particle::distanceFrom(const Particle &other) const {
 	return hypot(this->position.x - other.position.x, this->position.y - other.position.y);
 }
-
-Particle::Particle()
-	: charge(0), radius(0), mass(0) {};

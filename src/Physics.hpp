@@ -24,3 +24,8 @@ void integrate(std::vector<Particle> &particles, float dt);
 * Makes sure particles don't escape
 */
 void applyBoundaries(std::vector<Particle>& particles, int width, int height);
+/*
+* Calculates the total electrical field vector from all particles relative to a position
+* Returns unit is N/C
+*/
+sf::Vector2f electricField(std::vector<Particle>& particles, sf::Vector2f position);

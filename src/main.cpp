@@ -14,7 +14,6 @@ const int FPS = 60;
 int main() {
 	std::cout << std::filesystem::current_path() << std::endl;
 	Simulation simulation(width, height);
-	simulation.addParticle(Particle({ 50, 50 }, 1, -1));
 	Renderer renderer(width, height, "Etai's Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
 	window->setVerticalSyncEnabled(true);
@@ -29,6 +28,7 @@ int main() {
 		window->clear({255, 255, 255, 255});
 		renderer.drawParticles(simulation.getParticles());
 		renderer.drawFPS(simulation.getParticles());
+		renderer.drawForceArrows(simulation.getParticles());
 		window->display();
 	}
 }

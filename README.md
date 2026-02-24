@@ -9,3 +9,4 @@
 * 2D particle simulator opens with a 800x600 window
 * right click spawns positive particles, left click spawns negatives
 * particles obey Coulomb's law
+* FPS + Particle Count HUD

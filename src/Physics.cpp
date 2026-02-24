@@ -1,13 +1,5 @@
 #include "Physics.hpp"
 #include "Constants.hpp"
-#include <cmath>
-
-float max(float a, float b) {
-	return (a > b) ? a : b;
-}
-float min(float a, float b) {
-	return (a < b) ? a : b;
-}
 
 sf::Vector2f coulombForce(const Particle &a, const Particle &b)
 {
@@ -50,30 +42,43 @@ void integrate(std::vector<Particle> &particles, float dt)
 void applyBoundaries(std::vector<Particle> &particles, int width, int height)
 {
 	for (Particle& particle : particles) {
-		//particle.position.x = max(0, particle.position.x);
-		//particle.position.x = min(width-particle.radius*2, particle.position.x);
-		//particle.position.y = max(0, particle.position.y);
-		//particle.position.y = min(height-particle.radius*2, particle.position.y);
-		//particle.velocity.x = (particle.position.x <= 0 || particle.position.x >= width-particle.radius*2)
-		//	? -particle.velocity.x : particle.velocity.x;
-		//particle.velocity.y = (particle.position.y <= 0 || particle.position.y >= height-particle.radius*2)
-		//	? -particle.velocity.y : particle.velocity.y;
-		if (particle.position.x <= 0) {
-			particle.position.x = 0;
+		if (particle.position.x <= particle.radius) {
+			particle.position.x = particle.radius;
 			particle.velocity.x = std::abs(particle.velocity.x);
 		}
-		else if (particle.position.x >= width - particle.radius * 2) {
-			particle.position.x = width - particle.radius * 2;
+		else if (particle.position.x >= width - particle.radius ) {
+			particle.position.x = width - particle.radius ;
 			particle.velocity.x = -std::abs(particle.velocity.x);
 		}
 
-		if (particle.position.y <= 0) {
-			particle.position.y = 0;
+		if (particle.position.y <= particle.radius) {
+			particle.position.y = particle.radius;
 			particle.velocity.y = std::abs(particle.velocity.y);
 		}
-		else if (particle.position.y >= height - particle.radius * 2) {
-			particle.position.y = height - particle.radius * 2;
+		else if (particle.position.y >= height - particle.radius) {
+			particle.position.y = height - particle.radius;
 			particle.velocity.y = -std::abs(particle.velocity.y);
 		}
 	}
+}
+
+sf::Vector2f particleElectricField(Particle &particle, sf::Vector2f position)
+{
+	Particle fakeParticle(position, 1, 1);
+	float distance = particle.distanceFrom(fakeParticle);
+	if (distance < 20.0f) return { 0, 0 };
+	sf::Vector2f delta = particle.position - position;
+	float sigmaF = Consts::K * (particle.getCharge()) / (std::pow(distance, 2));
+	float fX = sigmaF * std::cos(delta.angle().asRadians());
+	float fY = sigmaF * std::sin(delta.angle().asRadians());
+	return sf::Vector2f{ fX, fY };
+}
+
+sf::Vector2f electricField(std::vector<Particle>& particles, sf::Vector2f position)
+{
+	sf::Vector2f result(0, 0);
+	for (Particle& particle : particles) {
+		result += particleElectricField(particle, position);
+	}
+	return result;
 }
