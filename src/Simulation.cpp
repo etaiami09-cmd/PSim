@@ -1,5 +1,4 @@
 #include "Simulation.hpp"
-#include <chrono>
 #include <SFML/Graphics.hpp>
 
 Simulation::Simulation(int width, int height)

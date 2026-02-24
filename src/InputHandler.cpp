@@ -1,5 +1,4 @@
 #include "InputHandler.hpp"
-#include <iostream>
 
 bool mouseWithinBounds(int width, int height, sf::RenderWindow* window) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);

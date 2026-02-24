@@ -4,17 +4,14 @@
 #include "Simulation.hpp"
 #include "Renderer.hpp"
 #include "InputHandler.hpp"
-#include <filesystem>
-#include <iostream>
 
 const int width = 800;
 const int height = 600;
 const int FPS = 60;
 
 int main() {
-	std::cout << std::filesystem::current_path() << std::endl;
 	Simulation simulation(width, height);
-	Renderer renderer(width, height, "Etai's Electromagnetism Simulator");
+	Renderer renderer(width, height, "Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
 	window->setVerticalSyncEnabled(true);
 	while (window->isOpen()) {
