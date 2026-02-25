@@ -4,6 +4,7 @@
 #include "Simulation.hpp"
 #include "Renderer.hpp"
 #include "InputHandler.hpp"
+#include "external_libraries/tinyfiledialogs.h"
 
 const int width = 800;
 const int height = 600;

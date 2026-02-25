@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_executable(PSim ${SOURCES} "src/Particle.cpp" "src/Physics.cpp" "src/Constants.hpp" "src/Simulation.cpp" "src/Renderer.cpp" "src/InputHandler.cpp")
+add_executable(PSim ${SOURCES} "src/Particle.cpp" "src/Physics.cpp" "src/Constants.hpp" "src/Simulation.cpp" "src/Renderer.cpp" "src/InputHandler.cpp" "src/SaveLoad.cpp")
 
 target_include_directories(PSim PRIVATE src)
 
@@ -18,3 +18,5 @@ target_include_directories(PSim PRIVATE
     C:/dev/vcpkg/installed/x64-windows/include
 )
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
+target_sources(PSim PRIVATE src/external_libraries/tinyfiledialogs.c)

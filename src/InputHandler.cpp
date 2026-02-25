@@ -1,4 +1,5 @@
 #include "InputHandler.hpp"
+#include "SaveLoad.hpp"
 
 bool mouseWithinBounds(int width, int height, sf::RenderWindow* window) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
@@ -83,7 +84,7 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	else {
 		pressedSpaceBefore = false;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
 		for (int i = 0; i < simulation.getParticles()->size(); i++) {
 			Particle& particle = simulation.getParticles()->at(i);
 			if (distanceMouse(particle.position, window) <= particle.radius) {
@@ -99,5 +100,19 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 			}
 		}
 		pressedEnterBefore = false;
+	}
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RControl))
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+		std::string path = promptSavePath();
+		saveToPath(path, simulation);
+		simulation.active = false;
+	}
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RControl))
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Key::O)) {
+		std::string path = promptOpenPath();
+		simulation.~Simulation();
+		simulation = openFrom(path);
 	}
 }

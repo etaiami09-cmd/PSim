@@ -17,5 +17,9 @@ public:
 	Simulation(int width, int height, int FPS);
 	void addParticle(Particle particle);
 	void update();
+	int getFPS();
+	int getWidth();
+	int getHeight();
+	float getSpeed();
 	std::vector<Particle>* getParticles();
 };

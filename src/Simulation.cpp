@@ -25,6 +25,26 @@ void Simulation::update()
 	resetForces(particles);
 }
 
+int Simulation::getFPS()
+{
+	return FPS;
+}
+
+int Simulation::getWidth()
+{
+	return width;
+}
+
+int Simulation::getHeight()
+{
+	return height;
+}
+
+float Simulation::getSpeed()
+{
+	return speed;
+}
+
 std::vector<Particle>* Simulation::getParticles()
 {
 	return &particles;
