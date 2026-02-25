@@ -45,3 +45,7 @@ cmake --build .
 ```
 ./PSim.exe
 ```
+## Contribution Guidelines
+I doubt anyone will ever see this repo, let alone actually use it, but if someone does find an issue they want fixed, they can either open an issue ticket or try to fix it themselves and send a pull request. Pull requests must explain the issue in detail, be well documented, and function properly.
+## Tests
+I have not yet added any tests, but when i do, any pull request must pass all tests before being sent
