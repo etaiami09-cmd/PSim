@@ -12,3 +12,34 @@
 * FPS + Particle Count HUD
 * Electric field lines
 * Press up/down to increase/decrease simulation speed
+## Installation Guidelines
+### Requirements
+* Visual Studio 2022
+* MSVS Desktop Development with C++ workload
+* CMake 3.20 or later
+* vcpkg
+* Git
+### Setup
+#### Clone Repository
+```
+git clone https://github.com/etaiami09-cmd/PSim.git
+cd PSim
+```
+#### Install vcpkg and SFML
+```
+* git clone https://github.com/microsoft/vcpkg.git C:/dev/vcpkg
+* C:/dev/vcpkg/bootstrap-vcpkg.bat
+* C:/dev/vcpkg/vcpkg install sfml
+* C:/dev/vcpkg/vcpkg integrate install
+```
+#### Configure and build
+```
+mkdir out/build
+cd out/build
+cmake ../.. -DCMAKE_TOOLCHAIN_FILE=C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build .
+```
+### Run
+```
+./PSim.exe
+```
