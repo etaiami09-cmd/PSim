@@ -10,7 +10,7 @@ const int height = 600;
 const int FPS = 60;
 
 int main() {
-	Simulation simulation(width, height);
+	Simulation simulation(width, height, FPS);
 	Renderer renderer(width, height, "Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
 	window->setVerticalSyncEnabled(true);
@@ -21,8 +21,14 @@ int main() {
 			}
 		}
 		handleEvents(window, simulation);
-		simulation.update();
-		window->clear({255, 255, 255, 255});
+		if (simulation.active) {
+			simulation.update();
+			window->clear({ 255, 255, 255, 255 });
+		}
+		else {
+			window->clear({ 255, 255, 255, 255 });
+			renderer.drawPauseMenu();
+		}
 		renderer.drawParticles(simulation.getParticles());
 		renderer.drawFPS(simulation.getParticles());
 		renderer.drawForceArrows(simulation.getParticles());

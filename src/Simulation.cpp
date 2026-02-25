@@ -1,12 +1,12 @@
 #include "Simulation.hpp"
 #include <SFML/Graphics.hpp>
 
-Simulation::Simulation(int width, int height)
-	: width(width), height(height)
+Simulation::Simulation(int width, int height, int FPS)
+	: width(width), height(height), FPS(FPS)
 {
 	particles = std::vector<Particle>(0);
-	clock = sf::Clock();
 	speed = 1;
+	active = true;
 }
 
 void Simulation::addParticle(Particle particle)
@@ -17,8 +17,7 @@ void Simulation::addParticle(Particle particle)
 void Simulation::update()
 {
 	accumulateForces(particles);
-	float dt = clock.restart().asSeconds();
-	dt = std::max(dt, 0.016f);
+	float dt = 1.0f / FPS;
 	integrate(particles, dt * speed);
 	applyBoundaries(particles, width, height);
 	resetForces(particles);

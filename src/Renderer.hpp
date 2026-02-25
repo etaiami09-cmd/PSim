@@ -18,4 +18,5 @@ public:
 	float getDelta();
 	void drawFPS(std::vector<Particle>* particles);
 	void drawForceArrows(std::vector<Particle>* particles);
+	void drawPauseMenu();
 };

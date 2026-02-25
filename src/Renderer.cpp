@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include <iostream>
 
 Renderer::Renderer(int width, int height, std::string name) {
 	window = sf::RenderWindow(sf::VideoMode({
@@ -98,48 +99,18 @@ void Renderer::drawForceArrows(std::vector<Particle>* particles) {
 	}
 	window.draw(lines);
 }
-//// TODO: attempt refactor into a continuous line for easier-on-the-eye field arrows
-//void Renderer::drawForceArrows(std::vector<Particle>* particles)
-//{
-//	sf::VertexArray lines(sf::PrimitiveType::Triangles);
-//	for (int i = 0; i < window.getSize().x; i += 100) {
-//		for (int j = 0; j < window.getSize().y; j += 100) {
-//			sf::Vector2f position = sf::Vector2f{ static_cast<float>(i), static_cast<float>(j)};
-//			sf::Vector2f field = electricField(*particles, position);
-//			if (field.x != 0 || field.y != 0) {
-//				float magnitude = std::sqrt(field.x * field.x + field.y * field.y);
-//				float arrowLength = std::clamp(std::log(magnitude + 1.0f) * 5.0f, 5.0f, 40.0f);
-//				sf::Vector2f arrowVector = field.normalized() * arrowLength;
-//				sf::Vertex start;
-//				start.position = position;
-//				start.color = sf::Color::Black;
-//				sf::Vertex end;
-//				end.position = position + arrowVector * 5.0f;
-//				end.color = sf::Color::Black;
-//				lines.append(start);
-//				lines.append(end);
-//				sf::Vector2f tip = position + arrowVector * 5.0f;
-//
-//				float angle = std::atan2(arrowVector.y, arrowVector.x);
-//				float branchLength = 5.0f;
-//				float branchAngle = 0.5f;
-//
-//				sf::Vector2f branch1 = {
-//					std::cos(angle + 3.14159f - branchAngle) * branchLength,
-//					std::sin(angle + 3.14159f - branchAngle) * branchLength
-//				};
-//				sf::Vector2f branch2 = {
-//					std::cos(angle + 3.14159f + branchAngle) * branchLength,
-//					std::sin(angle + 3.14159f + branchAngle) * branchLength
-//				};
-//
-//				lines.append(sf::Vertex{ tip, sf::Color::Black });
-//				lines.append(sf::Vertex{ tip + branch1, sf::Color::Black });
-//				lines.append(sf::Vertex{ tip, sf::Color::Black });
-//				lines.append(sf::Vertex{ tip + branch2, sf::Color::Black });
-//				appendThickLine(lines, position, tip, 2.0f, sf::Color::Black);
-//			}
-//		}
-//	}
-//	window.draw(lines);
-//}
+void Renderer::drawPauseMenu()
+{
+	sf::Text text(font, "SIMULATION PAUSED");
+	text.setFillColor(sf::Color::Red);
+	text.setCharacterSize(24);
+	sf::Vector2u windowSize = window.getSize();
+	sf::Vector2f position = sf::Vector2f{
+		static_cast<float>(windowSize.x), static_cast<float>(windowSize.y)
+	};
+	sf::Vector2f textDimensions = text.getLocalBounds().size;
+	position.x -= textDimensions.x+20;
+	position.y -= textDimensions.y*2+10;
+	text.setPosition(position);
+	window.draw(text);
+}

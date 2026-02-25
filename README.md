@@ -12,6 +12,7 @@
 * FPS + Particle Count HUD
 * Electric field lines
 * Press up/down to increase/decrease simulation speed
+* Pause simulation with Space key
 ## Installation Guidelines
 ### Requirements
 * Visual Studio 2022

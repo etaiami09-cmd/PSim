@@ -12,6 +12,7 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	static bool pressedLeftBefore = false;
 	static bool pressedDownBefore = false;
 	static bool pressedUpBefore = false;
+	static bool pressedSpaceBefore;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 		window->close();
 		return;
@@ -66,5 +67,14 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	}
 	else {
 		pressedDownBefore = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+		if (!pressedSpaceBefore) {
+			simulation.active = !simulation.active;
+		}
+		pressedSpaceBefore = true;
+	}
+	else {
+		pressedSpaceBefore = false;
 	}
 }
