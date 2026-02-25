@@ -12,6 +12,7 @@ private:
 public:
 	float speed;
 	bool active;
+	std::vector<bool> isPaused;
 public:
 	Simulation(int width, int height, int FPS);
 	void addParticle(Particle particle);

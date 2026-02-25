@@ -19,7 +19,7 @@ void resetForces(std::vector<Particle> &particles);
 /*
 * Updates particles based on time passed
 */
-void integrate(std::vector<Particle> &particles, float dt);
+void integrate(std::vector<Particle> &particles, float dt, std::vector<bool> &isPaused);
 /*
 * Makes sure particles don't escape
 */

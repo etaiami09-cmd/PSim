@@ -13,6 +13,7 @@
 * Electric field lines
 * Press up/down to increase/decrease simulation speed
 * Pause simulation with Space key
+* Pressing Left Ctrl will pause any particle touching your cursor
 ## Installation Guidelines
 ### Requirements
 * Visual Studio 2022

@@ -6,13 +6,19 @@ bool mouseWithinBounds(int width, int height, sf::RenderWindow* window) {
 		&& mousePosition.y <= height && mousePosition.y >= 0);
 }
 
+float distanceMouse(sf::Vector2f &position, sf::RenderWindow* window) {
+	sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*window));
+	return std::hypot(mousePosition.x - position.x, mousePosition.y - position.y);
+}
+
 void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 {
 	static bool pressedRightBefore = false;
 	static bool pressedLeftBefore = false;
 	static bool pressedDownBefore = false;
 	static bool pressedUpBefore = false;
-	static bool pressedSpaceBefore;
+	static bool pressedSpaceBefore = false;
+	static bool pressedEnterBefore = false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 		window->close();
 		return;
@@ -76,5 +82,22 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	}
 	else {
 		pressedSpaceBefore = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl)) {
+		for (int i = 0; i < simulation.getParticles()->size(); i++) {
+			Particle& particle = simulation.getParticles()->at(i);
+			if (distanceMouse(particle.position, window) <= particle.radius) {
+				simulation.isPaused[i] = true;
+			}
+		}
+		pressedEnterBefore = true;
+	}
+	else {
+		if (pressedEnterBefore) {
+			for (auto& pauseStatus : simulation.isPaused) {
+				pauseStatus = false;
+			}
+		}
+		pressedEnterBefore = false;
 	}
 }

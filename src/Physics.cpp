@@ -31,12 +31,15 @@ void resetForces(std::vector<Particle> &particles)
 	}
 }
 
-void integrate(std::vector<Particle> &particles, float dt)
+void integrate(std::vector<Particle> &particles, float dt, std::vector<bool> &isPaused)
 {
-	for (Particle& particle : particles) {
-		particle.velocity.x += (particle.force.x / particle.mass) * dt*0.9f;
-		particle.velocity.y += (particle.force.y / particle.mass) * dt*0.9f;
-		particle.position += particle.velocity * dt;
+	for (int i = 0; i < particles.size(); i++) {
+		if (!isPaused[i]) {
+			Particle& particle = particles[i];
+			particle.velocity.x += (particle.force.x / particle.mass) * dt * 0.9f;
+			particle.velocity.y += (particle.force.y / particle.mass) * dt * 0.9f;
+			particle.position += particle.velocity * dt;
+		}
 	}
 }
 
