@@ -20,6 +20,16 @@ void Renderer::drawParticles(std::vector<Particle>* particles)
 		circle.setFillColor((particle.getCharge() < 0) ? sf::Color::Yellow : sf::Color::Red);
 		circle.setPosition(particle.position - sf::Vector2f{particle.radius, particle.radius});
 		window.draw(circle);
+		sf::Text chargeSymbol(font, (particle.charge > 0) ? "+" : "-");
+		chargeSymbol.setCharacterSize(particle.radius * 2.5);
+		sf::FloatRect symbolBounds = chargeSymbol.getLocalBounds();
+		chargeSymbol.setOrigin({
+			symbolBounds.position.x + symbolBounds.size.x / 2.0f,
+			symbolBounds.position.y + symbolBounds.size.y / 2.0f
+		});
+		chargeSymbol.setPosition(particle.position);
+		chargeSymbol.setFillColor(sf::Color::Black);
+		window.draw(chargeSymbol);
 	}
 }
 
@@ -58,21 +68,6 @@ void Renderer::drawFPS(std::vector<Particle> *particles)
 	window.draw(text);
 }
 
-void appendThickLine(sf::VertexArray& vertices, sf::Vector2f start, sf::Vector2f end, float thickness, sf::Color color)
-{
-	sf::Vector2f direction = end - start;
-	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-	sf::Vector2f unit = direction / length;
-	sf::Vector2f perp = { -unit.y, unit.x };
-	sf::Vector2f offset = perp * (thickness / 2.0f);
-
-	vertices.append(sf::Vertex{ start - offset, color });
-	vertices.append(sf::Vertex{ start + offset, color });
-	vertices.append(sf::Vertex{ end + offset, color });
-	vertices.append(sf::Vertex{ start - offset, color });
-	vertices.append(sf::Vertex{ end + offset, color });
-	vertices.append(sf::Vertex{ end - offset, color });
-}
 void Renderer::drawForceArrows(std::vector<Particle>* particles) {
 	sf::VertexArray lines(sf::PrimitiveType::Lines);
 	

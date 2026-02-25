@@ -30,9 +30,9 @@ int main() {
 			window->clear({ 255, 255, 255, 255 });
 			renderer.drawPauseMenu();
 		}
+		renderer.drawForceArrows(simulation.getParticles());
 		renderer.drawParticles(simulation.getParticles());
 		renderer.drawFPS(simulation.getParticles());
-		renderer.drawForceArrows(simulation.getParticles());
 		window->display();
 	}
 }
