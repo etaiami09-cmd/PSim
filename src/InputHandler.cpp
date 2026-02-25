@@ -105,6 +105,9 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RControl))
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
 		std::string path = promptSavePath();
+		if (path == "NULL") {
+			return;
+		}
 		saveToPath(path, simulation);
 		simulation.active = false;
 	}
@@ -112,6 +115,9 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RControl))
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Key::O)) {
 		std::string path = promptOpenPath();
+		if (path == "NULL") {
+			return;
+		}
 		simulation.~Simulation();
 		simulation = openFrom(path);
 	}

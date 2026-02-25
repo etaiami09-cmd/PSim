@@ -70,7 +70,7 @@ sf::Vector2f particleElectricField(Particle &particle, sf::Vector2f position)
 {
 	Particle fakeParticle(position, 1, 1);
 	float distance = particle.distanceFrom(fakeParticle);
-	if (distance < 20.0f) return { 0, 0 };
+	if (distance < particle.radius) return { 0, 0 };
 	sf::Vector2f delta = particle.position - position;
 	float sigmaF = Consts::K * (particle.getCharge()) / (std::pow(distance, 2));
 	float fX = sigmaF * std::cos(delta.angle().asRadians());

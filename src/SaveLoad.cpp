@@ -45,7 +45,7 @@ Simulation openFrom(std::string path)
 
 std::string promptOpenPath()
 {
-	return tinyfd_openFileDialog(
+	const char* path = tinyfd_openFileDialog(
 		"Open Simulation",
 		"",
 		0,
@@ -53,17 +53,21 @@ std::string promptOpenPath()
 		nullptr,
 		0
 	);
+	if (!path) return "NULL";
+	return path;
 }
 
 std::string promptSavePath()
 {
-	return tinyfd_saveFileDialog(
+	const char* path = tinyfd_saveFileDialog(
 		"Save Simulation",
 		"save.psim",
 		0,
 		nullptr,
 		nullptr
 	);
+	if (!path) return "NULL";
+	return path;
 }
 
 void saveToPath(std::string path, Simulation& simulation)
