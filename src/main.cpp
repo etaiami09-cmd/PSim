@@ -14,14 +14,21 @@ int main() {
 	Simulation simulation(width, height, FPS);
 	Renderer renderer(width, height, "Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
+	bool focused = true;
 	window->setVerticalSyncEnabled(true);
 	while (window->isOpen()) {
 		while (const std::optional event = window->pollEvent()) {
 			if (event->is<sf::Event::Closed>()) {
 				window->close();
 			}
+			else if (event->is<sf::Event::FocusLost>()) {
+				focused = false;
+			}
+			else if (event->is<sf::Event::FocusGained>()) {
+				focused = true;
+			}
 		}
-		handleEvents(window, simulation);
+		if (focused) handleEvents(window, simulation);
 		if (simulation.active) {
 			simulation.update();
 			window->clear({ 255, 255, 255, 255 });
