@@ -90,6 +90,9 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 			if (distanceMouse(particle.position, window) <= particle.radius) {
 				simulation.isPaused[i] = true;
 			}
+			else {
+				simulation.isPaused[i] = false;
+			}
 		}
 		pressedEnterBefore = true;
 	}
@@ -118,7 +121,6 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 		if (path == "NULL") {
 			return;
 		}
-		simulation.~Simulation();
 		simulation = openFrom(path);
 	}
 }

@@ -89,6 +89,8 @@ void Renderer::drawForceArrows(std::vector<Particle>* particles) {
 				lines.append(end);
 				x += arrowVector.x;
 				y += arrowVector.y;
+				if (x > window.getSize().x || x < 0
+					|| y > window.getSize().y || y < 0) break;
 			}
 		}
 	}
