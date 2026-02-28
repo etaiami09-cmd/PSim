@@ -15,9 +15,11 @@ sf::Vector2f coulombForce(const Particle &a, const Particle &b)
 void accumulateForces(std::vector<Particle> &particles)
 {
 	for (int i = 0; i < particles.size(); i++) {
-		for (int j = 0; j < particles.size(); j++) {
+		for (int j = i+1; j < particles.size(); j++) {
 			if (i != j) {
-				particles[i].force += coulombForce(particles[i], particles[j]);
+				sf::Vector2f force = coulombForce(particles[i], particles[j]);
+				particles[i].force += force;
+				particles[j].force -= force;
 			}
 		}
 		particles[i].force += lorentzForce(particles[i]);
