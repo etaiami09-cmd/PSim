@@ -1,12 +1,14 @@
 #include "InputHandler.hpp"
 #include "SaveLoad.hpp"
 
+// helper method for checking if the mouse is currently within a window
 bool mouseWithinBounds(int width, int height, sf::RenderWindow* window) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
 	return (mousePosition.x <= width && mousePosition.x >= 0
 		&& mousePosition.y <= height && mousePosition.y >= 0);
 }
 
+// check the distance of a sf::Vector2f object from the cursor
 float distanceMouse(sf::Vector2f &position, sf::RenderWindow* window) {
 	sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*window));
 	return std::hypot(mousePosition.x - position.x, mousePosition.y - position.y);

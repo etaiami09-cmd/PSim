@@ -11,11 +11,14 @@ const int height = 600;
 const int FPS = 60;
 
 int main() {
+	// set up stack
 	Simulation simulation(width, height, FPS);
 	Renderer renderer(width, height, "Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
 	bool focused = true;
+	// TODO: fix cross-platform issues with vsync (low priority)
 	window->setVerticalSyncEnabled(true);
+	// event loop
 	while (window->isOpen()) {
 		while (const std::optional event = window->pollEvent()) {
 			if (event->is<sf::Event::Closed>()) {
@@ -28,6 +31,7 @@ int main() {
 				focused = true;
 			}
 		}
+		// prevent listening for inputs when window is not in focus
 		if (focused) handleEvents(window, simulation);
 		if (simulation.active) {
 			simulation.update();
@@ -37,6 +41,7 @@ int main() {
 			window->clear({ 255, 255, 255, 255 });
 			renderer.drawPauseMenu();
 		}
+		// TOOD: make menu for triggering force arrows and other features
 		renderer.drawForceArrows(simulation.getParticles());
 		renderer.drawParticles(simulation.getParticles());
 		renderer.drawFPS(simulation.getParticles());
