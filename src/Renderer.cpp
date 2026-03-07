@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "Settings.hpp"
 #include <iostream>
 
 Renderer::Renderer(int width, int height, std::string name) {
@@ -11,6 +12,7 @@ Renderer::Renderer(int width, int height, std::string name) {
 	frameIndex = 0;
 	frameCount = 0;
 	displayedFPS = 60;
+	setWindow(&window);
 }
 
 void Renderer::drawParticles(std::vector<Particle>* particles)
@@ -65,7 +67,11 @@ void Renderer::drawFPS(std::vector<Particle> *particles)
 	text.setCharacterSize(24);
 	text.setFillColor(sf::Color::Black);
 	text.setPosition({ 0, 0 });
+	sf::View screenView(sf::FloatRect({ 0.f, 0.f }, sf::Vector2f(window.getSize())));
+	sf::View simView = window.getView();
+	window.setView(screenView);
 	window.draw(text);
+	window.setView(simView);
 }
 
 void Renderer::drawForceArrows(std::vector<Particle>* particles) {
@@ -110,4 +116,26 @@ void Renderer::drawPauseMenu()
 	position.y -= textDimensions.y*2+10;
 	text.setPosition(position);
 	window.draw(text);
+}
+
+void Renderer::resize(Simulation& sim)
+{
+	sf::Vector2u winSize = window.getSize();
+	float simWidth = static_cast<float>(sim.getWidth());
+	float simHeight = static_cast<float>(sim.getHeight());
+	float simAspect = simWidth / simHeight;
+	float winAspect = static_cast<float>(winSize.x) / static_cast<float>(winSize.y);
+
+	float viewWidth, viewHeight;
+	if (winAspect > simAspect) {
+		viewHeight = simHeight;
+		viewWidth = simHeight * winAspect;
+	}
+	else {
+		viewWidth = simWidth;
+		viewHeight = simWidth / winAspect;
+	}
+
+	sf::View simView(sf::FloatRect({ 0.f, 0.f }, { viewWidth, viewHeight }));
+	window.setView(simView);
 }

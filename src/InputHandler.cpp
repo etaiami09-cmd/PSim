@@ -1,5 +1,6 @@
 #include "InputHandler.hpp"
 #include "SaveLoad.hpp"
+#include "Settings.hpp"
 
 // helper method for checking if the mouse is currently within a window
 bool mouseWithinBounds(int width, int height, sf::RenderWindow* window) {
@@ -29,12 +30,11 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		if (!pressedRightBefore) {
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
-			sf::Vector2f mousePosFloat = sf::Vector2f{
-				static_cast<float>(mousePos.x),static_cast<float>(mousePos.y)
-			};
+			sf::Vector2f mousePosFloat = static_cast<sf::Vector2f>(mousePos);
 			sf::Vector2u windowDimensions = window->getSize();
 			if (mouseWithinBounds(windowDimensions.x, windowDimensions.y, window)) {
-				simulation.addParticle(Particle(mousePosFloat, 1, 1));
+				sf::Vector2f simPos = windowToSim(mousePosFloat);
+				simulation.addParticle(Particle(simPos, 1, 1));
 			}
 		}
 		pressedRightBefore = true;
@@ -45,12 +45,11 @@ void handleEvents(sf::RenderWindow* window, Simulation& simulation)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		if (!pressedLeftBefore) {
 			sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
-			sf::Vector2f mousePosFloat = sf::Vector2f{
-				static_cast<float>(mousePos.x),static_cast<float>(mousePos.y)
-			};
+			sf::Vector2f mousePosFloat = static_cast<sf::Vector2f>(mousePos);
 			sf::Vector2u windowDimensions = window->getSize();
 			if (mouseWithinBounds(windowDimensions.x, windowDimensions.y, window)) {
-				simulation.addParticle(Particle(mousePosFloat, 1, -1));
+				sf::Vector2f simPos = windowToSim(mousePosFloat);
+				simulation.addParticle(Particle(simPos, 1, -1));
 			}
 		}
 		pressedLeftBefore = true;

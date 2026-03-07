@@ -1,5 +1,6 @@
 #include "Simulation.hpp"
 #include <SFML/Graphics.hpp>
+#include "Settings.hpp"
 
 Simulation::Simulation(int width, int height, int FPS)
 	: width(width), height(height), FPS(FPS)
@@ -8,6 +9,7 @@ Simulation::Simulation(int width, int height, int FPS)
 	speed = 1;
 	active = true;
 	isPaused = std::vector<bool>(0);
+	setSimulation(this);
 }
 
 void Simulation::addParticle(Particle particle)

@@ -4,20 +4,20 @@
 #include "Simulation.hpp"
 #include "Renderer.hpp"
 #include "InputHandler.hpp"
+#include "Settings.hpp"
 #include "external_libraries/tinyfiledialogs.h"
 
-const int width = 800;
-const int height = 600;
-const int FPS = 60;
+UserSettings* settings = getUserSettings();
 
 int main() {
 	// set up stack
-	Simulation simulation(width, height, FPS);
-	Renderer renderer(width, height, "Electromagnetism Simulator");
+	Simulation simulation(800, 600, 60);
+	Renderer renderer(settings->width, settings->height, "Electromagnetism Simulator");
 	sf::RenderWindow* window = renderer.getWindow();
 	bool focused = true;
+	renderer.resize(simulation);
 	// TODO: fix cross-platform issues with vsync (low priority)
-	window->setVerticalSyncEnabled(true);
+	window->setVerticalSyncEnabled(settings->vsync);
 	// event loop
 	while (window->isOpen()) {
 		while (const std::optional event = window->pollEvent()) {
@@ -29,6 +29,10 @@ int main() {
 			}
 			else if (event->is<sf::Event::FocusGained>()) {
 				focused = true;
+			}
+			else if (const auto* resized = event->getIf<sf::Event::Resized>()) {
+				window->setSize(resized->size);
+				renderer.resize(simulation);
 			}
 		}
 		// prevent listening for inputs when window is not in focus

@@ -50,4 +50,5 @@ public:
 	* Draws the pause menu
 	*/
 	void drawPauseMenu();
+	void resize(Simulation& sim);
 };
